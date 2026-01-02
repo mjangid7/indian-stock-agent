@@ -1,0 +1,87 @@
+# Cron Configuration Examples for Indian Stock Market Agent
+# 
+# Instructions:
+# 1. Edit crontab: crontab -e
+# 2. Choose one of the configurations below
+# 3. Replace /path/to/indian-stock-agent with actual path
+# 4. Replace /path/to/venv/bin/python with your venv Python path
+# 5. Save and exit
+
+# ============================================================================
+# RECOMMENDED: Every 15 minutes during market hours (9:15 AM - 3:30 PM IST)
+# ============================================================================
+# Runs Mon-Fri at 9:15, 9:30, 9:45, 10:00, ... 15:15, 15:30
+# Agent internally checks market hours and exits gracefully if outside
+
+*/15 9-15 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# ============================================================================
+# ALTERNATIVE: Specific times during market hours
+# ============================================================================
+# Market open (9:15 AM)
+15 9 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# Mid-morning (11:00 AM)
+0 11 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# Pre-lunch (12:30 PM)
+30 12 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# Afternoon (2:00 PM)
+0 14 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# Market close (3:30 PM)
+30 15 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# ============================================================================
+# TESTING: Every 5 minutes (use temporarily for testing)
+# ============================================================================
+*/5 * * * * cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py --force >> logs/cron.log 2>&1
+
+# ============================================================================
+# AGGRESSIVE: Every 5 minutes during market hours
+# ============================================================================
+*/5 9-15 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# ============================================================================
+# CONSERVATIVE: Once per hour during market hours
+# ============================================================================
+0 9-15 * * 1-5 cd /path/to/indian-stock-agent && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# ============================================================================
+# NOTES
+# ============================================================================
+# - Cron times are in server's local timezone - adjust if not IST
+# - Agent checks market hours internally, so safe to run during market hours range
+# - Use --force flag to bypass market hours check (for testing only)
+# - Logs go to logs/cron.log - monitor with: tail -f /path/to/indian-stock-agent/logs/cron.log
+# - To disable temporarily: comment out line with # at start
+# - To list active cron jobs: crontab -l
+# - To remove all cron jobs: crontab -r (WARNING: removes ALL cron jobs)
+
+# ============================================================================
+# ENVIRONMENT VARIABLES (if using .env)
+# ============================================================================
+# If you need to pass environment variables (e.g., for alerts):
+# */15 9-15 * * 1-5 cd /path/to/indian-stock-agent && /usr/bin/env TELEGRAM_BOT_TOKEN=xxx /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# Or source .env file:
+# */15 9-15 * * 1-5 cd /path/to/indian-stock-agent && source .env && /path/to/venv/bin/python agent_runner.py >> logs/cron.log 2>&1
+
+# ============================================================================
+# LOG ROTATION (optional - prevents logs from growing too large)
+# ============================================================================
+# Run weekly log cleanup (keep last 30 days)
+# 0 0 * * 0 find /path/to/indian-stock-agent/logs -name "*.log" -mtime +30 -delete
+
+# ============================================================================
+# EXAMPLE: Complete setup with environment variables and log rotation
+# ============================================================================
+# Agent runs every 15 minutes during market hours
+# */15 9-15 * * 1-5 cd /path/to/indian-stock-agent && source venv/bin/activate && python agent_runner.py >> logs/cron.log 2>&1
+
+# Database cleanup weekly (keep last 90 days)
+# 0 2 * * 0 cd /path/to/indian-stock-agent && /path/to/venv/bin/python -c "from db import cleanup_old_data; cleanup_old_data(90)"
+
+# Log rotation monthly
+# 0 3 1 * * find /path/to/indian-stock-agent/logs -name "*.log" -mtime +30 -delete

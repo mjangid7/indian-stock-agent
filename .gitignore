@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project Specific
+*.db
+*.db-journal
+.cache/
+logs/*.log
+logs/cron.log
+
+# Keep logs directory but ignore contents
+logs/*
+!logs/.gitkeep
+
+# Sensitive Configuration (if using separate file)
+.env
+.env.local
+secrets.py
+config.local.py
+
+# Data Cache
+market_data_cache.db
+
+# Jupyter Notebooks (if added later)
+.ipynb_checkpoints/
+*.ipynb
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json

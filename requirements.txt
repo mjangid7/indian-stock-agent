@@ -1,0 +1,28 @@
+# Core dependencies
+langgraph>=0.2.0
+langchain-core>=0.3.0
+
+# Data sources (jugaad-data priority, yfinance as fallback)
+jugaad-data==0.29
+# Using yfinance 0.1.x which is compatible with beautifulsoup4==4.9.3
+yfinance<0.2.0
+
+# Technical analysis
+pandas-ta>=0.4.67b0
+pandas>=2.2.0
+numpy>=1.26.0
+
+# LLM integration
+ollama>=0.4.0
+
+# Data validation
+pydantic>=2.10.0
+pydantic-settings>=2.6.0
+
+# Utilities
+python-dateutil>=2.9.0
+pytz>=2024.1
+requests>=2.32.0
+
+# Database
+# sqlite3 is built-in to Python
